@@ -1,3 +1,4 @@
+<img width="300" height="300" alt="badge" src="https://github.com/user-attachments/assets/515b47de-4393-40d4-beae-c30f144ddc89" />
 CorpIA — Agente Inteligente RAG
 
 
