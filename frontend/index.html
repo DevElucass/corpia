@@ -1,126 +1,553 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CorpIA - Assistente Inteligente</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --primary-hover: #1d4ed8;
+
+            --background: #f1f5f9;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+
+            --text: #0f172a;
+            --text-secondary: #64748b;
+
+            --bot-message: #f1f5f9;
+            --user-message: #2563eb;
+
+            --success: #22c55e;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            height: 100vh;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--background);
+
+            min-height: 100vh;
+
             display: flex;
             justify-content: center;
             align-items: center;
+
+            padding: 24px;
         }
 
         .chat-container {
-            width: 90%;
-            max-width: 900px;
-            height: 90vh;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            width: 100%;
+            max-width: 1050px;
+
+            height: calc(100vh - 48px);
+            max-height: 900px;
+
+            background: var(--surface);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 50px rgba(15, 23, 42, 0.12);
+
             display: flex;
             flex-direction: column;
+
             overflow: hidden;
         }
 
+        /* =========================
+           HEADER
+        ========================= */
+
         .header {
-            background: #172554;
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554 0%,
+                    #1e3a8a 55%,
+                    #2563eb 100%
+                );
+
             color: white;
-            padding: 22px;
-        }
 
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
+            padding: 22px 28px;
 
-        .header p {
-            font-size: 14px;
-            opacity: 0.85;
-        }
-
-        .messages {
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
             gap: 14px;
         }
 
-        .message {
-            max-width: 75%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            line-height: 1.5;
-            white-space: pre-wrap;
+        .logo {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, 0.14);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
-        .bot {
-            background: #e5e7eb;
-            color: #111827;
+        .header-text h1 {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .header-text p {
+            margin-top: 3px;
+
+            font-size: 13px;
+
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            font-size: 13px;
+
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+
+            box-shadow:
+                0 0 0 4px rgba(34, 197, 94, 0.15);
+        }
+
+        /* =========================
+           TOOLBAR
+        ========================= */
+
+        .toolbar {
+            padding: 10px 22px;
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+            justify-content: flex-end;
+
+            background: #ffffff;
+        }
+
+        .clear-button {
+            border: none;
+
+            background: transparent;
+
+            color: var(--text-secondary);
+
+            font-size: 13px;
+
+            padding: 7px 10px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .clear-button:hover {
+            background: #f1f5f9;
+            color: var(--text);
+        }
+
+        /* =========================
+           MENSAGENS
+        ========================= */
+
+        .messages {
+            flex: 1;
+
+            padding: 26px;
+
+            overflow-y: auto;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 18px;
+
+            scroll-behavior: smooth;
+        }
+
+        .welcome {
+            text-align: center;
+
+            color: var(--text-secondary);
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .message-row {
+            display: flex;
+
+            gap: 10px;
+
+            max-width: 82%;
+        }
+
+        .message-row.bot {
             align-self: flex-start;
         }
 
-        .user {
-            background: #2563eb;
-            color: white;
+        .message-row.user {
             align-self: flex-end;
+
+            flex-direction: row-reverse;
         }
+
+        .avatar {
+            flex-shrink: 0;
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .bot .avatar {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .user .avatar {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .message-content {
+            display: flex;
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+        .message-label {
+            font-size: 11px;
+
+            color: var(--text-secondary);
+
+            padding: 0 4px;
+        }
+
+        .user .message-label {
+            text-align: right;
+        }
+
+        .message {
+            padding: 13px 16px;
+
+            border-radius: 14px;
+
+            line-height: 1.55;
+
+            font-size: 15px;
+
+            white-space: pre-wrap;
+
+            overflow-wrap: anywhere;
+        }
+
+        .bot .message {
+            background: var(--bot-message);
+
+            color: var(--text);
+        }
+
+        .user .message {
+            background: var(--user-message);
+
+            color: white;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading-message {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .loading-dots span {
+            width: 6px;
+            height: 6px;
+
+            background: var(--primary-light);
+
+            border-radius: 50%;
+
+            animation: loading 1.2s infinite ease-in-out;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes loading {
+
+            0%,
+            60%,
+            100% {
+                opacity: 0.25;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
+        /* =========================
+           INPUT
+        ========================= */
 
         .input-area {
+            border-top: 1px solid var(--border);
+
+            padding: 16px 20px;
+
+            background: #ffffff;
+        }
+
+        .input-container {
             display: flex;
+
+            align-items: flex-end;
+
             gap: 10px;
-            padding: 16px;
-            border-top: 1px solid #e5e7eb;
         }
 
-        .input-area input {
+        #question {
             flex: 1;
-            padding: 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            font-size: 16px;
+
+            min-height: 50px;
+            max-height: 140px;
+
+            resize: none;
+
+            padding: 14px 16px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 12px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            color: var(--text);
+
             outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
         }
 
-        .input-area input:focus {
-            border-color: #2563eb;
+        #question::placeholder {
+            color: #94a3b8;
         }
 
-        .input-area button {
-            padding: 14px 24px;
+        #question:focus {
+            border-color: var(--primary-light);
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        #sendButton {
+            height: 50px;
+
+            padding: 0 22px;
+
             border: none;
-            border-radius: 10px;
-            background: #2563eb;
+
+            border-radius: 12px;
+
+            background: var(--primary-light);
+
             color: white;
-            font-size: 16px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
             cursor: pointer;
+
+            transition:
+                background 0.2s,
+                transform 0.1s;
         }
 
-        .input-area button:hover {
-            background: #1d4ed8;
+        #sendButton:hover:not(:disabled) {
+            background: var(--primary-hover);
         }
 
-        .input-area button:disabled {
-            background: #9ca3af;
+        #sendButton:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        #sendButton:disabled {
+            background: #94a3b8;
+
             cursor: not-allowed;
         }
 
-        .loading {
-            font-style: italic;
-            opacity: 0.7;
+        .input-help {
+            margin-top: 7px;
+
+            padding-left: 3px;
+
+            color: #94a3b8;
+
+            font-size: 11px;
         }
+
+        /* =========================
+           SCROLLBAR
+        ========================= */
+
+        .messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+
+            border-radius: 10px;
+        }
+
+        .messages::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 0;
+            }
+
+            .chat-container {
+                height: 100vh;
+
+                max-height: none;
+
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 18px;
+            }
+
+            .logo {
+                width: 42px;
+                height: 42px;
+            }
+
+            .header-text h1 {
+                font-size: 20px;
+            }
+
+            .status {
+                display: none;
+            }
+
+            .messages {
+                padding: 18px;
+            }
+
+            .message-row {
+                max-width: 92%;
+            }
+
+            .input-area {
+                padding: 12px;
+            }
+
+            #sendButton {
+                padding: 0 16px;
+            }
+
+            .input-help {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 
@@ -128,131 +555,471 @@
 
 <div class="chat-container">
 
-    <div class="header">
-        <h1>CorpIA</h1>
-        <p>Assistente inteligente para consulta de conhecimentos</p>
-    </div>
+    <!-- HEADER -->
 
-    <div id="messages" class="messages">
+    <header class="header">
 
-        <div class="message bot">
-            Olá! Sou o assistente da CorpIA.
-            Faça uma pergunta sobre o conhecimento disponível na base.
+        <div class="brand">
+
+            <div class="logo">
+                C
+            </div>
+
+            <div class="header-text">
+
+                <h1>CorpIA</h1>
+
+                <p>
+                    Assistente inteligente para consulta de conhecimentos
+                </p>
+
+            </div>
+
         </div>
 
-    </div>
+        <div class="status">
 
-    <div class="input-area">
+            <span class="status-dot"></span>
 
-        <input
-            type="text"
-            id="question"
-            placeholder="Digite sua pergunta..."
-            autocomplete="off"
+            <span>Online</span>
+
+        </div>
+
+    </header>
+
+
+    <!-- TOOLBAR -->
+
+    <div class="toolbar">
+
+        <button
+            id="clearButton"
+            class="clear-button"
+            type="button"
         >
-
-        <button id="sendButton">
-            Enviar
+            Limpar conversa
         </button>
 
     </div>
 
+
+    <!-- MENSAGENS -->
+
+    <main
+        id="messages"
+        class="messages"
+    >
+
+        <div class="welcome">
+            Consulte informações disponíveis na base de conhecimento da CorpIA.
+        </div>
+
+        <div class="message-row bot">
+
+            <div class="avatar">
+                C
+            </div>
+
+            <div class="message-content">
+
+                <div class="message-label">
+                    CorpIA
+                </div>
+
+                <div class="message">
+                    Olá! Sou o assistente da CorpIA.
+
+                    Faça uma pergunta sobre o conhecimento disponível na base.
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- INPUT -->
+
+    <footer class="input-area">
+
+        <div class="input-container">
+
+            <textarea
+                id="question"
+                placeholder="Digite sua pergunta..."
+                rows="1"
+                autocomplete="off"
+            ></textarea>
+
+            <button
+                id="sendButton"
+                type="button"
+            >
+                Enviar
+            </button>
+
+        </div>
+
+        <div class="input-help">
+            Pressione Enter para enviar · Shift + Enter para nova linha
+        </div>
+
+    </footer>
+
 </div>
+
 
 <script>
 
 const API_URL = "http://localhost:8082/chatbot/perguntar";
 
-const questionInput = document.getElementById("question");
-const sendButton = document.getElementById("sendButton");
-const messages = document.getElementById("messages");
+const questionInput =
+    document.getElementById("question");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const clearButton =
+    document.getElementById("clearButton");
+
+const messages =
+    document.getElementById("messages");
+
+
+/*
+ * ==========================================
+ * ADICIONAR MENSAGEM
+ * ==========================================
+ */
 
 function adicionarMensagem(texto, tipo) {
 
-    const mensagem = document.createElement("div");
+    const row =
+        document.createElement("div");
 
-    mensagem.classList.add("message");
-    mensagem.classList.add(tipo);
+    row.classList.add(
+        "message-row",
+        tipo
+    );
 
-    mensagem.textContent = texto;
+    const avatar =
+        document.createElement("div");
 
-    messages.appendChild(mensagem);
+    avatar.classList.add("avatar");
 
-    messages.scrollTop = messages.scrollHeight;
+    avatar.textContent =
+        tipo === "bot"
+            ? "C"
+            : "Você";
 
-    return mensagem;
+    const content =
+        document.createElement("div");
+
+    content.classList.add(
+        "message-content"
+    );
+
+    const label =
+        document.createElement("div");
+
+    label.classList.add(
+        "message-label"
+    );
+
+    label.textContent =
+        tipo === "bot"
+            ? "CorpIA"
+            : "Você";
+
+    const message =
+        document.createElement("div");
+
+    message.classList.add("message");
+
+    message.textContent = texto;
+
+    content.appendChild(label);
+
+    content.appendChild(message);
+
+    row.appendChild(avatar);
+
+    row.appendChild(content);
+
+    messages.appendChild(row);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+    return row;
 }
 
-async function enviarPergunta() {
 
-    const pergunta = questionInput.value.trim();
+/*
+ * ==========================================
+ * INDICADOR DE CARREGAMENTO
+ * ==========================================
+ */
 
-    if (!pergunta) {
-        return;
-    }
+function adicionarCarregamento() {
 
-    adicionarMensagem(pergunta, "user");
+    const row =
+        document.createElement("div");
 
-    questionInput.value = "";
-
-    sendButton.disabled = true;
-
-    const carregando = adicionarMensagem(
-        "Consultando a base de conhecimento...",
+    row.classList.add(
+        "message-row",
         "bot"
     );
 
-    carregando.classList.add("loading");
+    const avatar =
+        document.createElement("div");
+
+    avatar.classList.add("avatar");
+
+    avatar.textContent = "C";
+
+    const content =
+        document.createElement("div");
+
+    content.classList.add(
+        "message-content"
+    );
+
+    const label =
+        document.createElement("div");
+
+    label.classList.add(
+        "message-label"
+    );
+
+    label.textContent = "CorpIA";
+
+    const message =
+        document.createElement("div");
+
+    message.classList.add(
+        "message",
+        "loading-message"
+    );
+
+    const text =
+        document.createElement("span");
+
+    text.textContent =
+        "Consultando a base";
+
+    const dots =
+        document.createElement("div");
+
+    dots.classList.add(
+        "loading-dots"
+    );
+
+    for (let i = 0; i < 3; i++) {
+
+        const dot =
+            document.createElement("span");
+
+        dots.appendChild(dot);
+
+    }
+
+    message.appendChild(text);
+
+    message.appendChild(dots);
+
+    content.appendChild(label);
+
+    content.appendChild(message);
+
+    row.appendChild(avatar);
+
+    row.appendChild(content);
+
+    messages.appendChild(row);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+    return row;
+}
+
+
+/*
+ * ==========================================
+ * ENVIAR PERGUNTA
+ * ==========================================
+ */
+
+async function enviarPergunta() {
+
+    const pergunta =
+        questionInput.value.trim();
+
+    if (!pergunta) {
+
+        questionInput.focus();
+
+        return;
+    }
+
+    adicionarMensagem(
+        pergunta,
+        "user"
+    );
+
+    questionInput.value = "";
+
+    ajustarAlturaTextarea();
+
+    sendButton.disabled = true;
+
+    questionInput.disabled = true;
+
+    const carregando =
+        adicionarCarregamento();
 
     try {
 
-        const response = await fetch(API_URL, {
+        const response =
+            await fetch(API_URL, {
 
-            method: "POST",
+                method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-            body: JSON.stringify({
-                pergunta: pergunta
-            })
+                body: JSON.stringify({
+                    pergunta: pergunta
+                })
 
-        });
+            });
 
         if (!response.ok) {
 
-            throw new Error(
-                `Erro HTTP ${response.status}`
-            );
+            let mensagemErro =
+                `Erro HTTP ${response.status}`;
 
+            try {
+
+                const erro =
+                    await response.json();
+
+                if (erro.message) {
+
+                    mensagemErro =
+                        erro.message;
+
+                }
+
+            } catch {
+                // Mantém a mensagem padrão.
+            }
+
+            throw new Error(
+                mensagemErro
+            );
         }
 
-        const resposta = await response.text();
+        const resposta =
+            await response.text();
 
         carregando.remove();
 
-        adicionarMensagem(resposta, "bot");
+        adicionarMensagem(
+            resposta,
+            "bot"
+        );
 
     } catch (erro) {
 
         carregando.remove();
 
         adicionarMensagem(
-            "Não foi possível conectar ao servidor CorpIA. Verifique se a API está executando na porta 8082.",
+            "Não foi possível obter uma resposta da CorpIA. Verifique se a API está executando na porta 8082.",
             "bot"
         );
 
-        console.error(erro);
+        console.error(
+            "Erro ao consultar a CorpIA:",
+            erro
+        );
 
     } finally {
 
         sendButton.disabled = false;
 
+        questionInput.disabled = false;
+
         questionInput.focus();
 
     }
 }
+
+
+/*
+ * ==========================================
+ * AJUSTAR TEXTAREA
+ * ==========================================
+ */
+
+function ajustarAlturaTextarea() {
+
+    questionInput.style.height = "auto";
+
+    questionInput.style.height =
+        Math.min(
+            questionInput.scrollHeight,
+            140
+        ) + "px";
+}
+
+
+/*
+ * ==========================================
+ * LIMPAR CONVERSA
+ * ==========================================
+ */
+
+clearButton.addEventListener(
+    "click",
+    function() {
+
+        messages.innerHTML = "";
+
+        const welcome =
+            document.createElement("div");
+
+        welcome.classList.add("welcome");
+
+        welcome.textContent =
+            "Consulte informações disponíveis na base de conhecimento da CorpIA.";
+
+        messages.appendChild(welcome);
+
+        adicionarMensagem(
+            "Olá! Sou o assistente da CorpIA.\n\nFaça uma pergunta sobre o conhecimento disponível na base.",
+            "bot"
+        );
+
+        questionInput.value = "";
+
+        ajustarAlturaTextarea();
+
+        questionInput.focus();
+
+    }
+);
+
+
+/*
+ * ==========================================
+ * EVENTOS
+ * ==========================================
+ */
 
 sendButton.addEventListener(
     "click",
@@ -263,14 +1030,36 @@ questionInput.addEventListener(
     "keydown",
     function(event) {
 
-        if (event.key === "Enter") {
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
             enviarPergunta();
+
         }
 
     }
 );
 
+questionInput.addEventListener(
+    "input",
+    ajustarAlturaTextarea
+);
+
+
+/*
+ * ==========================================
+ * FOCO INICIAL
+ * ==========================================
+ */
+
+questionInput.focus();
+
 </script>
 
 </body>
+
 </html>
