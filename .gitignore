@@ -1,0 +1,55 @@
+# Java / Maven
+**/target/
+**/.classpath
+**/.project
+**/.settings/
+**/.factorypath
+**/.springBeans
+**/.sts4-cache
+
+# IntelliJ
+**/.idea/
+**/*.iml
+**/*.iws
+**/*.ipr
+
+# VS Code
+.vscode/
+**/.vscode/
+
+# Node
+**/node_modules/
+**/dist/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker / runtime
+*.pid
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Temporary / lock files
+*.tmp
+*.temp
+*.swp
+*~
+.~lock.*
+
+# Build artifacts
+*.class
+
+# Local configuration
+application-local.properties
+application-local.yml
+
+# Documentos pessoais / uploads locais
+backend/corpia-api/documentos/uploads/

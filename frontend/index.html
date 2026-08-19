@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CorpIA - Assistente Inteligente</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 900px;
+            height: 90vh;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #172554;
+            color: white;
+            padding: 22px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .bot {
+            background: #e5e7eb;
+            color: #111827;
+            align-self: flex-start;
+        }
+
+        .user {
+            background: #2563eb;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding: 16px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-area input:focus {
+            border-color: #2563eb;
+        }
+
+        .input-area button {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background: #1d4ed8;
+        }
+
+        .input-area button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            font-style: italic;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <div class="header">
+        <h1>CorpIA</h1>
+        <p>Assistente inteligente para consulta de conhecimentos</p>
+    </div>
+
+    <div id="messages" class="messages">
+
+        <div class="message bot">
+            Olá! Sou o assistente da CorpIA.
+            Faça uma pergunta sobre o conhecimento disponível na base.
+        </div>
+
+    </div>
+
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="question"
+            placeholder="Digite sua pergunta..."
+            autocomplete="off"
+        >
+
+        <button id="sendButton">
+            Enviar
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const API_URL = "http://localhost:8082/chatbot/perguntar";
+
+const questionInput = document.getElementById("question");
+const sendButton = document.getElementById("sendButton");
+const messages = document.getElementById("messages");
+
+function adicionarMensagem(texto, tipo) {
+
+    const mensagem = document.createElement("div");
+
+    mensagem.classList.add("message");
+    mensagem.classList.add(tipo);
+
+    mensagem.textContent = texto;
+
+    messages.appendChild(mensagem);
+
+    messages.scrollTop = messages.scrollHeight;
+
+    return mensagem;
+}
+
+async function enviarPergunta() {
+
+    const pergunta = questionInput.value.trim();
+
+    if (!pergunta) {
+        return;
+    }
+
+    adicionarMensagem(pergunta, "user");
+
+    questionInput.value = "";
+
+    sendButton.disabled = true;
+
+    const carregando = adicionarMensagem(
+        "Consultando a base de conhecimento...",
+        "bot"
+    );
+
+    carregando.classList.add("loading");
+
+    try {
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                pergunta: pergunta
+            })
+
+        });
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Erro HTTP ${response.status}`
+            );
+
+        }
+
+        const resposta = await response.text();
+
+        carregando.remove();
+
+        adicionarMensagem(resposta, "bot");
+
+    } catch (erro) {
+
+        carregando.remove();
+
+        adicionarMensagem(
+            "Não foi possível conectar ao servidor CorpIA. Verifique se a API está executando na porta 8082.",
+            "bot"
+        );
+
+        console.error(erro);
+
+    } finally {
+
+        sendButton.disabled = false;
+
+        questionInput.focus();
+
+    }
+}
+
+sendButton.addEventListener(
+    "click",
+    enviarPergunta
+);
+
+questionInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+            enviarPergunta();
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

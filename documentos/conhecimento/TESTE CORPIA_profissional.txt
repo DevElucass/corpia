@@ -1,0 +1,65 @@
+PERFIL PROFISSIONAL
+
+IDENTIFICAÇÃO
+
+Nome: Enivaldo Lucas de Souza
+
+FORMAÇÃO ACADÊMICA
+
+Gestão de Tecnologia da Informação - Graduação.
+Conclusão: 2024.
+
+Engenharia de Software - Especialização.
+Conclusão: abril de 2026.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Profissional com mais de 14 anos de experiência na área de logística e Supply Chain.
+
+Experiência em liderança operacional, gestão de equipes, gestão de estoque, gestão de transportes e operações logísticas.
+
+Experiência em supervisão e coordenação de operações, centros de distribuição, processos de estoque, transporte e eficiência operacional.
+
+COMPETÊNCIAS PROFISSIONAIS
+
+Excel
+SAP
+WMS
+Lean
+Supply Chain
+Logística
+Gestão de Estoque
+Gestão de Transportes
+Gestão de Centros de Distribuição
+Gestão de Processos
+Liderança de Equipes
+Eficiência Operacional
+
+CURSOS E QUALIFICAÇÕES
+
+SAP
+WMS
+Gestão de Estoque
+Gestão de Transportes
+Liderança de Equipes
+Lean Logistics
+
+ENGENHARIA DE SOFTWARE
+
+Formação em Engenharia de Software.
+
+Conhecimentos relacionados a desenvolvimento de software, desenvolvimento de APIs REST, bancos de dados relacionais, arquitetura de sistemas, integração de sistemas e desenvolvimento de aplicações web.
+
+PROJETOS DE SOFTWARE
+
+Desenvolvimento de projetos para demonstração prática de conhecimentos em Engenharia de Software.
+
+Experiência prática com Java, Spring Boot, PostgreSQL, APIs REST, Git, GitHub, Visual Studio Code e desenvolvimento de aplicações.
+
+OBJETIVO PROFISSIONAL
+
+Aplicar conhecimentos de Engenharia de Software no desenvolvimento de soluções tecnológicas, integrando experiência profissional, análise de processos, logística, Supply Chain e desenvolvimento de sistemas.
+
+PERFIL PROFISSIONAL RESUMIDO
+
+Profissional com experiência consolidada em logística e Supply Chain, atualmente direcionando sua carreira para Engenharia de Software, buscando integrar conhecimento de processos operacionais e tecnologia para desenvolver soluções de software aplicáveis a problemas reais de negócio.

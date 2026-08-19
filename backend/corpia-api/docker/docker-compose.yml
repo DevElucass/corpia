@@ -1,0 +1,20 @@
+services:
+
+  postgres-vector:
+    image: pgvector/pgvector:0.8.5-pg18
+
+    container_name: corpia-postgres-vector
+
+    environment:
+      POSTGRES_DB: corpia_rag
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - corpia_pgvector_data:/var/lib/postgresql
+
+volumes:
+  corpia_pgvector_data:
