@@ -53,3 +53,6 @@ application-local.yml
 
 # Documentos pessoais / uploads locais
 backend/corpia-api/documentos/uploads/
+
+# Arquivos compactados locais
+*.zip
