@@ -30,4 +30,13 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+.vscode/# Arquivos de trabalho / temporários
+maven-status/
+*.bak
+chunks.txt
+cp.txt
+-F
+ExtrairPdf.java
+
+# Arquivos compactados locais
+*.zip
