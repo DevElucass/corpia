@@ -40,3 +40,8 @@ ExtrairPdf.java
 
 # Arquivos compactados locais
 *.zip
+
+# Arquivos de teste locais do Supabase
+Curriculo_Teste.pdf
+TesteSupabase.java
+jdbc-classpath.txt

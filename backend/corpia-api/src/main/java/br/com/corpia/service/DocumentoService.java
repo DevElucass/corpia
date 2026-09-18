@@ -39,34 +39,53 @@ public class DocumentoService {
         return documentoRepository.findAll();
     }
 
-    public String salvarArquivo(MultipartFile arquivo) throws IOException {
+    public String salvarArquivo(MultipartFile arquivo)
+            throws IOException {
 
         if (arquivo.isEmpty()) {
-            throw new IOException("Nenhum arquivo foi enviado.");
+            throw new IOException(
+                    "Nenhum arquivo foi enviado.");
         }
 
         if (!Files.exists(pastaUploads)) {
             Files.createDirectories(pastaUploads);
         }
 
-        String nomeArquivo = arquivo.getOriginalFilename();
+        String nomeOriginal = arquivo.getOriginalFilename();
 
-        if (nomeArquivo == null || nomeArquivo.isBlank()) {
-            throw new IOException("Nome do arquivo inválido.");
+        if (nomeOriginal == null
+                || nomeOriginal.isBlank()) {
+
+            throw new IOException(
+                    "Nome do arquivo inválido.");
         }
+
+        /*
+         * Mantém somente o nome do arquivo,
+         * removendo qualquer caminho enviado pelo cliente.
+         */
+        String nomeArquivo = Paths.get(nomeOriginal)
+                .getFileName()
+                .toString();
 
         Path destino = pastaUploads.resolve(nomeArquivo);
 
         arquivo.transferTo(destino);
 
-        String texto = PdfExtractor.extrairTexto(destino.toString());
+        String texto = PdfExtractor.extrairTexto(
+                destino.toString());
 
-        System.out.println("========== TEXTO EXTRAÍDO ==========");
+        System.out.println(
+                "========== TEXTO EXTRAÍDO ==========");
+
         System.out.println(texto);
 
         String nome = CurriculoParser.extrairNome(texto);
+
         String email = CurriculoParser.extrairEmail(texto);
+
         String telefone = CurriculoParser.extrairTelefone(texto);
+
         String competencias = CurriculoParser.extrairCompetencias(texto);
 
         System.out.println("NOME: " + nome);
@@ -82,9 +101,11 @@ public class DocumentoService {
 
         documento.setNome(nome);
         documento.setTipo(arquivo.getContentType());
-        documento.setCaminhoArquivo(destino.toString());
+        documento.setCaminhoArquivo(
+                destino.toString());
         documento.setConteudo(texto);
-        documento.setDataUpload(LocalDateTime.now());
+        documento.setDataUpload(
+                LocalDateTime.now());
 
         Documento documentoSalvo = documentoRepository.save(documento);
 

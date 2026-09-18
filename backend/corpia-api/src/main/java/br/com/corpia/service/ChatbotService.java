@@ -2,6 +2,7 @@ package br.com.corpia.service;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
+import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,16 @@ public class ChatbotService {
             ChatClient.Builder chatClientBuilder,
             VectorStore vectorStore) {
 
+        SearchRequest searchRequest = SearchRequest.builder()
+                .topK(5)
+                .similarityThreshold(0.20)
+                .build();
+
         this.chatClient = chatClientBuilder
                 .defaultAdvisors(
-                        QuestionAnswerAdvisor.builder(vectorStore).build())
+                        QuestionAnswerAdvisor.builder(vectorStore)
+                                .searchRequest(searchRequest)
+                                .build())
                 .defaultSystem("""
                         Você é o assistente inteligente da CorpIA.
 
@@ -27,7 +35,11 @@ public class ChatbotService {
                         diga claramente que não encontrou essa informação.
 
                         Não invente informações sobre candidatos,
-                        experiências, competências, formação ou cursos.
+                        experiências, competências, formação, cursos,
+                        salários ou qualquer outra informação.
+
+                        Quando houver informações relevantes na base,
+                        organize a resposta de forma clara e objetiva.
 
                         Responda em português do Brasil.
                         Seja objetivo e profissional.
