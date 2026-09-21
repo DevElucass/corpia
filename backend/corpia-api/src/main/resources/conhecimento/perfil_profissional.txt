@@ -1,0 +1,50 @@
+PERFIL PROFISSIONAL
+
+IDENTIFICACAO
+Nome: Enivaldo Lucas de Souza
+
+FORMACAO ACADEMICA
+Gestao de Tecnologia da Informacao - Graduacao
+Conclusao: 2024
+Engenharia de Software - Especializacao
+Conclusao: abril de 2026
+
+EXPERIENCIA PROFISSIONAL
+Profissional com mais de 14 anos de experiencia em Logistica e Supply Chain.
+Experiencia em lideranca operacional, gestao de equipes, gestao de estoque e gestao de transportes.
+Experiencia em supervisao e coordenacao de operacoes logisticas.
+
+COMPETENCIAS PROFISSIONAIS
+Excel
+SAP
+WMS
+Lean
+Supply Chain
+Logistica
+Gestao de Estoque
+Gestao de Transportes
+Gestao de Centros de Distribuicao
+Gestao de Processos
+Lideranca de Equipes
+Eficiencia Operacional
+
+CURSOS E QUALIFICACOES
+SAP
+WMS
+Gestao de Estoque
+Gestao de Transportes
+Lideranca de Equipes
+Lean Logistics
+Gestao de Indicadores Logisticos
+Supply Chain
+
+ENGENHARIA DE SOFTWARE
+Formacao em Engenharia de Software.
+Conhecimentos relacionados ao desenvolvimento de software, APIs REST, bancos de dados relacionais, arquitetura de sistemas e desenvolvimento web.
+
+PROJETOS DE SOFTWARE
+Desenvolvimento de projetos para demonstracao pratica de conhecimentos em Engenharia de Software.
+Experiencia pratica com Java, Spring Boot, PostgreSQL, APIs REST, Git e GitHub.
+
+OBJETIVO PROFISSIONAL
+Aplicar conhecimentos de Engenharia de Software no desenvolvimento de solucoes tecnologicas, integrando experiencia profissional, analise de processos, Logistica e Supply Chain.
