@@ -10,28 +10,24 @@ import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.stereotype.Service;
 
 import br.com.corpia.util.CurriculoParser;
-import br.com.corpia.util.PdfExtractor;
 
 @Service
 public class RagIndexService {
 
-        private static final String CAMINHO_PDF = "documentos/uploads/Curr_Prof_Jun.pdf";
-
-        private static final String NOME_ARQUIVO = "Curr_Prof_Jun.pdf";
-
         private final VectorStore vectorStore;
+        private final ConhecimentoService conhecimentoService;
 
-        public RagIndexService(VectorStore vectorStore) {
+        public RagIndexService(
+                        VectorStore vectorStore,
+                        ConhecimentoService conhecimentoService) {
                 this.vectorStore = vectorStore;
+                this.conhecimentoService = conhecimentoService;
         }
 
         public int indexarConhecimento() {
-
-                String texto = PdfExtractor.extrairTexto(CAMINHO_PDF);
-
                 return indexarDocumento(
-                                texto,
-                                NOME_ARQUIVO);
+                                conhecimentoService.obterConhecimento(),
+                                "perfil_profissional.txt");
         }
 
         public int indexarDocumento(
@@ -44,9 +40,6 @@ public class RagIndexService {
 
                 String nomeCandidato = CurriculoParser.extrairNome(texto);
 
-                /*
-                 * Remove os chunks anteriores do mesmo documento.
-                 */
                 Filter.Expression filtro = new Filter.Expression(
                                 Filter.ExpressionType.EQ,
                                 new Filter.Key("source"),
@@ -73,20 +66,10 @@ public class RagIndexService {
                                 .map(chunk -> Document.builder()
                                                 .id(chunk.getId())
                                                 .text(chunk.getText())
-                                                .metadata(
-                                                                "source",
-                                                                nomeArquivo)
-                                                .metadata(
-                                                                "candidate_name",
-                                                                nomeCandidato)
-                                                .metadata(
-                                                                "chunk_index",
-                                                                String.valueOf(
-                                                                                chunks.indexOf(chunk)))
-                                                .metadata(
-                                                                "total_chunks",
-                                                                String.valueOf(
-                                                                                chunks.size()))
+                                                .metadata("source", nomeArquivo)
+                                                .metadata("candidate_name", nomeCandidato)
+                                                .metadata("chunk_index", String.valueOf(chunks.indexOf(chunk)))
+                                                .metadata("total_chunks", String.valueOf(chunks.size()))
                                                 .build())
                                 .toList();
 
@@ -107,7 +90,6 @@ public class RagIndexService {
                                 .similarityThreshold(0.10)
                                 .build();
 
-                return vectorStore.similaritySearch(
-                                searchRequest);
+                return vectorStore.similaritySearch(searchRequest);
         }
 }
