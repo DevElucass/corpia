@@ -1,3 +1,5 @@
+<img width="300" height="300" alt="badge" src="https://github.com/user-attachments/assets/8dba0c81-dcf4-4ed7-a7d7-9166063b0861" />
+
 # CorpIA — Agente Inteligente RAG
 
 **Desenvolvido por Enivaldo Lucas de Souza**
