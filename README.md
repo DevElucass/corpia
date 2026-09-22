@@ -1,5 +1,8 @@
-<img width="300" height="300" alt="badge" src="https://github.com/user-attachments/assets/8dba0c81-dcf4-4ed7-a7d7-9166063b0861" />
 # CorpIA — Agente Inteligente RAG
+
+**Desenvolvido por Enivaldo Lucas de Souza**
+
+© 2026 Enivaldo Lucas de Souza
 
 Projeto desenvolvido para o Challenge Alura Agente, com o objetivo de demonstrar a construção de um agente de inteligência artificial capaz de responder perguntas com base no conteúdo de um documento PDF.
 
@@ -222,7 +225,7 @@ Infraestrutura
 
 Vercel para hospedagem do frontend
 
-Oracle Cloud Infrastructure (OCI) para o deploy do backend
+Railway para o deploy do backend
 
 PostgreSQL
 
@@ -570,19 +573,17 @@ A Vercel hospeda o frontend da aplicação localizado em:
 ```text
 frontend/index.html
 
-## 20. Deploy na Oracle Cloud Infrastructure (OCI)
+## 20. Deploy do backend na Railway
 
-O deploy do backend na OCI é a etapa destinada à disponibilização pública da API e do agente.
+O deploy do backend na Railway disponibiliza publicamente a API do CorpIA e permite a integração com o frontend publicado na Vercel.
 
 URL pública do backend
 
-Ainda não disponibilizada.
+https://corpia-production-c5eb.up.railway.app
 
 Evidência do deploy
 
-Após a implantação, adicionar nesta seção uma captura de tela mostrando o backend e/ou a aplicação funcionando na OCI e respondendo a uma pergunta do agente.
-
-## 21. Entrega do Challenge
+Evidência do deploy: o backend está publicado na Railway e foi validado por meio do endpoint de status, que retornou o serviço como online.
 
 ### Repositório no GitHub
 
@@ -594,8 +595,6 @@ Projeto desenvolvido e concluído como parte do **Challenge Alura RAG — Agente
 
 ![Badge Alura - Challenge RAG Agente IA](docs/images/alura-challenge-badge.png)
 
-## 23. Autor
+<img width="300" height="300" alt="badge" src="https://github.com/user-attachments/assets/8dba0c81-dcf4-4ed7-a7d7-9166063b0861" />
 
-Enivaldo Lucas de Souza
 
-Projeto desenvolvido para o Challenge Alura Agente.
