@@ -427,7 +427,7 @@ A aplicação utiliza OPENAI_API_KEY para acessar o modelo de IA e POSTGRES_PASS
 
 Entre na pasta do backend:
 
-cd "C:\Users\dluca\OneDrive\Área de Trabalho\CorpIA\backend\corpia-api"
+cd backend/corpia-api
 
 Suba a aplicação:
 
