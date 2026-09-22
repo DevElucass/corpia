@@ -593,6 +593,8 @@ Evidência do deploy: o backend está publicado na Railway e foi validado por me
 
 ## 22. Badge de conclusão do Challenge Alura
 
+<img width="300" height="300" alt="badge" src="https://github.com/user-attachments/assets/8dba0c81-dcf4-4ed7-a7d7-9166063b0861" />
+
 Projeto desenvolvido e concluído como parte do **Challenge Alura RAG — Agente de IA**.
 
 
