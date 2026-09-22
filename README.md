@@ -55,9 +55,9 @@ Agente inteligente funcional
 
 O agente recebe perguntas através da API e utiliza informações recuperadas do documento PDF por meio da arquitetura RAG.
 
-Deploy na OCI
+Deploy na Railway
 
-A seção de deploy registra a etapa de implantação do backend na Oracle Cloud Infrastructure (OCI), incluindo URL pública e evidência visual quando disponível.
+A seção de deploy registra a implantação do backend na Railway, incluindo a URL pública da API e evidências de funcionamento.
 
 ## 3. Arquitetura da solução
 
